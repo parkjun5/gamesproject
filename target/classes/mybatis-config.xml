@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+  
+<configuration>
+	<typeAliases>
+	
+			<typeAlias type="global.sesoc.personal.vo.puser" alias="puser"/>
+			<typeAlias type="global.sesoc.personal.vo.mainboard" alias="Board"/>
+			<typeAlias type="global.sesoc.personal.vo.puestbook" alias="puestbook"/>
+			<typeAlias type="global.sesoc.personal.vo.preply" alias="preply"/>
+	</typeAliases>
+	<typeHandlers>
+	 <typeHandler handler="global.sesoc.personal.LongTypeHandler.CLOBHandler" jdbcType="LONGVARCHAR" javaType="java.lang.String"/>
+</typeHandlers>
+	<mappers>
+	<mapper resource="mapper/puserMapper.xml" />
+	<mapper resource="mapper/boardMapper.xml" />
+	<mapper resource="mapper/puestbookMapper.xml" />
+	<mapper resource="mapper/replyMapper.xml" />
+	</mappers>	
+</configuration>
+
+

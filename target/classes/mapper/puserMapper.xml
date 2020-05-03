@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="global.sesoc.personal.dao.puserMapper">
+
+
+<insert id="insertUser" parameterType="puser">
+	insert into puser
+	(
+	useremail
+	,userpwd
+	,username
+	,userno 
+	)
+		values
+	(
+	#{useremail}
+	,#{userpwd}
+	,#{username}
+	,puser_seq.nextval
+	)
+
+</insert>
+
+
+<insert id="GetKey" parameterType="Map">
+	update puser set userkey = #{param2} where username =#{param1}
+
+</insert>
+<update id="alter_userKey" parameterType="Map">
+	update puser set userkey ='Y' where username =#{param1} and userkey=#{param2}
+</update>
+<!-- 로그읜할떄 사용 -->
+<select id="selectOne" parameterType="puser" resultType="puser">
+select  *
+	from 
+		puser
+	where
+		 useremail = #{useremail}
+	and 
+		userpwd  = #{userpwd} 
+
+</select>
+<select id="selectname" parameterType="puser" resultType="puser">
+select  *
+	from 
+		puser
+	where
+		 username = #{username}
+	
+
+</select>
+<select id="selectemail" parameterType="puser" resultType="puser">
+select  *
+	from 
+		puser
+	where
+		 useremail = #{useremail}
+	
+
+</select>
+
+<select id="confirmPwd" parameterType="puser" resultType="puser">
+
+	select * from puser
+	where username=#{username}
+	and userpwd = #{userpwd}
+
+</select>
+<update id="modifyCustomer" parameterType="puser">
+	update puser set
+	userpwd = #{userpwd}
+	,username = #{username}
+	<if test="originalfilename != null">
+	,originalfilename=  #{originalfilename}
+	,savedfilename=  #{savedfilename}
+</if>
+	where useremail = #{useremail}
+
+</update>
+</mapper>

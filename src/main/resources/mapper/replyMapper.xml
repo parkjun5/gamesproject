@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="global.sesoc.personal.dao.ReplyMapper">
+	
+	<insert id="replyWrite" parameterType="preply">
+	insert into preply
+	values
+	(
+	 preply_seq.nextval
+	,#{writer}
+	,#{savedfilename}
+	,sysdate
+	,#{replytext}
+	,#{boardno}
+
+	)
+	</insert>
+	<select id="replylist" parameterType="int" resultType="preply">
+	select *
+	from preply
+	where boardno =#{boardno}
+	
+	order by 
+	replyno desc
+	
+	</select>
+	<delete id="deleteReply" parameterType="map">
+	delete 
+	preply
+	where replyno =#{replyno}
+	
+	</delete>
+	<update id="modifyReply" parameterType="preply">
+	update preply set
+	replytext = #{replytext}
+	
+	where replyno =#{replyno}
+	</update>
+	
+	<select id="getReplyAmmout" parameterType="int" resultType="int">
+	select count(*)
+	from preply
+	where
+		boardno=#{boardno}
+	
+	
+	</select>
+</mapper>

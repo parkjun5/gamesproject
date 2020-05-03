@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="global.sesoc.personal.dao.BoardMapper">
+	<insert id="insertBoard" parameterType="Board">
+
+		INSERT INTO mainboard
+		(boardno, writer, title, content)
+		VALUES ( board_seq.nextval,
+		#{writer}, #{title}, #{content})
+
+	</insert>
+
+	<select id="selectOne" parameterType="int" resultType="Board">
+
+		select
+		*from mainboard
+		where boardno = #{boardno}
+
+	</select>
+
+	<delete id="deleteBoard" parameterType="int">
+
+		delete
+		mainboard
+		where
+		boardno= #{boardno}
+
+	</delete>
+
+	<update id="updateBoard" parameterType="Board">
+		UPDATE mainboard 
+		SET
+		 title = #{title}
+		, content=#{content}
+		, regdate=sysdate
+		 where boardno
+		=#{boardno}
+	</update>
+	<select id="getBoardCount" parameterType="map" resultType="int">
+
+		select count(*)
+		from
+		mainboard
+		where
+		<choose>
+			<when test="searchItem == 'title'">title</when>
+			<when test="searchItem == 'writer'">writer</when>
+		</choose>
+		like '%' || #{searchWord} || '%'
+
+	</select>
+
+	<select id="searchAll" resultType="Board" parameterType="map">
+
+		select *
+		from mainboard
+		where
+		<choose>
+			<when test="searchItem == 'title'">title</when>
+			<when test="searchItem == 'content'">content</when>
+			<when test="searchItem == 'writer'">writer</when>
+		</choose>
+
+		like '%' || #{searchWord} || '%'
+		order by boardno desc
+
+	</select>
+	<select id="rankList" resultType="Board">
+
+		select *
+		from mainboard
+		order by hitcount desc
+	</select>
+	<update id="incrementHitCount" parameterType="int">
+		update
+		mainboard
+		set
+		hitcount=hitcount+1
+		where boardno= #{boardno}
+	</update>
+
+
+</mapper>
